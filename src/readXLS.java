@@ -2,18 +2,19 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFRow;
-
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 
 
 public class readXLS {
 	FileOutputStream fichier;
 	HSSFWorkbook wb;
+	ArrayList<String> listeOnglets = new ArrayList<String>();
 	
 	readXLS (String nomFichier) {
 		try {
@@ -29,8 +30,12 @@ public class readXLS {
 		}
 	}
 	
+	private void monterListeOnglets(){
+		
+	}
+	
 	//
-	// Retourne la chaine de caractères contenue (numColonne, numLigne)
+	// Retourne la chaine de caractï¿½res contenue (numColonne, numLigne)
 	// dans l'onglet "onglet"
 	//
 	public String lireXY(String onglet, int numColonne, int numLigne){
