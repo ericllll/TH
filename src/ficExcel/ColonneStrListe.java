@@ -51,7 +51,7 @@ public class ColonneStrListe extends Colonne {
 					if(chEnCours){
 						liste.add(str);
 						chEnCours=false;
-						String 
+						//String 
 					}
 				}
 			}
