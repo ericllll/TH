@@ -21,7 +21,8 @@ public class readXLS {
 			POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(nomFichier));
 			wb = new HSSFWorkbook(fs);
 			// nombre d'onglets
-			int nbOnglets = wb.getNumberOfSheets();
+			//int nbOnglets = wb.getNumberOfSheets();
+			//System.out.println(nbOnglets);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -31,13 +32,15 @@ public class readXLS {
 	}
 	
 	private void monterListeOnglets(){
-		
+		;
 	}
 	
 	//
 	// Retourne la chaine de caract�res contenue (numColonne, numLigne)
 	// dans l'onglet "onglet"
 	//
+	
+	/*
 	public String lireXY(String onglet, int numColonne, int numLigne){
 		String cellule = null;
 		HSSFSheet sheet = wb.getSheet(onglet);
@@ -62,5 +65,5 @@ public class readXLS {
 		System.out.println(i);
 		
 		return i;
-	}
+	}*/
 }

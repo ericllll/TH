@@ -1,14 +1,16 @@
+import ficExcel.*;
+
 public class Test {
 
 	public static void main(String[] args) {
-		readXLS essai = new readXLS("VeriGraf_R02_03.xls");
+		String str = "abcde";
+		str.substring(0, 0);
+		System.out.println(str + str.length());
 		
-		String cellule;
-		cellule = essai.lireXY("DEFINITION_ATTRIBUT", 2, 8);
-		System.out.println("-" + cellule + "-");
-		
-		//String[] tab = new String[20];
-		//tab = cellule.split(arg0)
+		/*
+		readXLS essai = new readXLS("YIS CT Build R02D02_P.xls");
+		System.out.println("fichier ouvert");
+		Colonne col = new ColonneStrSimple(essai.wb, "ROUTE_FLANK_SWITCHES_R");
+		col.afficheListe();*/
 	}
-
 }
