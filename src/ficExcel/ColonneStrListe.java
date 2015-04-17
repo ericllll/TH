@@ -8,17 +8,17 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ColonneStrListe extends Colonne {
 	
-	String [] cellule = new String[nbLignes];
-	public ColonneStrListe(HSSFWorkbook wb, String NomCol){
-		ArrayList<String> liste;
+	String [][] liste = new String[nbLignes][nbLignes];
+	public ColonneStrListe(HSSFWorkbook wb){
 		HSSFSheet sheet = wb.getSheet("Shunting");
 		HSSFRow row ;
 		String chaine = new String();
 		
-		for(int i=0; i<cellule.length; i++){
+		for(int i=0; i<nbLignes; i++){
 				row = sheet.getRow(i+1);
 				chaine = row.getCell(18).toString();
-				
+				//System.out.println("test1");
+				creerListe(chaine, i);
 			}
 		}
 	
@@ -28,41 +28,46 @@ public class ColonneStrListe extends Colonne {
 	// Entree : String chaine
 	// Sortie : ArrayList<String>
 	//
-	private void creerListe(String chaine) {
-		ArrayList<String> liste = new ArrayList<String>();
-		int longueur = chaine.length();
+	private void creerListe(String chaine, int ligne) {
 		int index = 0;
-		//char [] charExclu = {' ', ',', ';'};
 		String charsExclus = " ,;"; 
 		char c;
-		String str = new String();
 		boolean chEnCours =false;
+		System.out.println("test2");
 		if(chaine.isEmpty()){
-			liste.add("");
+			System.out.println("test3");
+			;
 		} else {
-			for(index=0; index<longueur; index++){
-				c = chaine.charAt(index);
+			for(int i=0; i<chaine.length(); i++){
+				c = chaine.charAt(i);
 				if(charsExclus.indexOf(c)==-1) {
 					if(!chEnCours){
 						chEnCours=true;
+						System.out.println("test boucle 1");
 					}
-					str.concat(Character.toString(c));
+					System.out.println("test boucle 2");
+					liste[ligne][index].concat(Character.toString(c));
+					System.out.println("test boucle 3");
 				} else {
 					if(chEnCours){
-						liste.add(str);
 						chEnCours=false;
-						//String 
+						index++;
 					}
 				}
 			}
-			
 		}
 	}
 	
 	
 	public void afficheListe(){
-		for(int i=0; i<cellule.length; i++){
-			System.out.println(cellule[i]);
+		int j;
+		for(int i=0; i<nbLignes; i++){
+			j=0;
+			while(!liste[i][j].isEmpty() && j<nbLignes){
+				System.out.print("__" + liste[i][j]);
+				j++;
+			}
+			System.out.println("");
 		}
 	}
 }
