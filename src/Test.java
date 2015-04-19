@@ -3,18 +3,17 @@ import ficExcel.*;
 public class Test {
 
 	public static void main(String[] args) {
-		StringBuilder [][] tt = new StringBuilder[3][3];
-		tt[1][2].append("my");
+		
 		
 		//tt[1][2].concat(Character.toString('s'));
-		System.out.println(tt[1][2]);
+		//System.out.println(tt[1][2]);
 		
-		/*
+		
 		readXLS essai = new readXLS("YIS CT Build R02D02_P.xls");
 		System.out.println("fichier ouvert");
 		Colonne col = new ColonneStrListe(essai.wb);
 		System.out.println("liste créée");
 		col.afficheListe();
-		*/
+		
 	}
 }

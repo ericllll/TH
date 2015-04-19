@@ -1,14 +1,12 @@
 package ficExcel;
 
-import java.util.ArrayList;
-
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ColonneStrListe extends Colonne {
 	
-	String [][] liste = new String[nbLignes][nbLignes];
+	Liste [] liste = new Liste[nbLignes];
 	public ColonneStrListe(HSSFWorkbook wb){
 		HSSFSheet sheet = wb.getSheet("Shunting");
 		HSSFRow row ;
@@ -17,8 +15,7 @@ public class ColonneStrListe extends Colonne {
 		for(int i=0; i<nbLignes; i++){
 				row = sheet.getRow(i+1);
 				chaine = row.getCell(18).toString();
-				//System.out.println("test1");
-				creerListe(chaine, i);
+				liste[i] = creerListe(chaine, i);
 			}
 		}
 	
@@ -28,14 +25,13 @@ public class ColonneStrListe extends Colonne {
 	// Entree : String chaine
 	// Sortie : ArrayList<String>
 	//
-	private void creerListe(String chaine, int ligne) {
-		int index = 0;
-		String charsExclus = " ,;"; 
+	private Liste creerListe(String chaine, int ligne) {
+		Liste l = new Liste();
+		String charsExclus = " ,;\n";
+		String chaineTemporaire = new String ();
 		char c;
 		boolean chEnCours =false;
-		System.out.println("test2");
 		if(chaine.isEmpty()){
-			System.out.println("test3");
 			;
 		} else {
 			for(int i=0; i<chaine.length(); i++){
@@ -43,31 +39,27 @@ public class ColonneStrListe extends Colonne {
 				if(charsExclus.indexOf(c)==-1) {
 					if(!chEnCours){
 						chEnCours=true;
-						System.out.println("test boucle 1");
 					}
-					System.out.println("test boucle 2");
-					liste[ligne][index].concat(Character.toString(c));
-					System.out.println("test boucle 3");
+					chaineTemporaire = chaineTemporaire.concat(Character.toString(c));
+					if (i==chaine.length()-1){
+						l.ajouteTete(chaineTemporaire);
+					}
 				} else {
 					if(chEnCours){
 						chEnCours=false;
-						index++;
+						l.ajouteTete(chaineTemporaire);
+						chaineTemporaire = new String();
 					}
 				}
 			}
 		}
+		return l;
 	}
 	
 	
 	public void afficheListe(){
-		int j;
-		for(int i=0; i<nbLignes; i++){
-			j=0;
-			while(!liste[i][j].isEmpty() && j<nbLignes){
-				System.out.print("__" + liste[i][j]);
-				j++;
-			}
-			System.out.println("");
+		for(Liste l : liste) {
+			System.out.println(l.toString());
 		}
 	}
 }
