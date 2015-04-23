@@ -14,7 +14,7 @@ public class ColonneStrListe extends Colonne {
 		
 		for(int i=0; i<nbLignes; i++){
 				row = sheet.getRow(i+1);
-				chaine = row.getCell(18).toString();
+				chaine = row.getCell(2).toString();
 				liste[i] = creerListe(chaine, i);
 			}
 		}
