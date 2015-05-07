@@ -23,4 +23,8 @@ public class Cellule {
 	public String toString() {
 		return ""+contenu;
 	}
+	
+	public boolean equals(String ch){
+		return contenu.equals(ch);
+	}
 }

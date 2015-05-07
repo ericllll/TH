@@ -15,6 +15,5 @@ public class Test {
 		Colonne col = new ColonneStrSimple(essai.wb, "");
 		System.out.println("liste créée");
 		col.afficheListe();
-		
 	}
 }

@@ -16,6 +16,11 @@ public class ColonneIntSimple extends Colonne {
 				cellule[i] = (int)row.getCell(14).getNumericCellValue();
 			}
 		}
+	
+	/*public boolean celluleEstVide(int numLigne){
+		
+	}*/
+	
 	public void afficheListe(){
 		for(int i=0; i<cellule.length; i++){
 			System.out.println(cellule[i]);

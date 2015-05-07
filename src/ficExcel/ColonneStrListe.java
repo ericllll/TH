@@ -3,8 +3,10 @@ package ficExcel;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import listes.*;
 
-public class ColonneStrListe extends Colonne {
+
+public class ColonneStrListe extends ColonneStr {
 	
 	Liste [] liste = new Liste[nbLignes];
 	public ColonneStrListe(HSSFWorkbook wb){
@@ -62,4 +64,28 @@ public class ColonneStrListe extends Colonne {
 			System.out.println(l.toString());
 		}
 	}
+
+	@Override
+	public boolean cellEstVide(int numLigne) {
+		return liste[numLigne].estVide();
+	}
+	
+	public boolean neContientQueElement(int numLigne, String element){
+		boolean ret = false;
+		
+		return ret;
+	}
+
+	public boolean contientElement(int numLigne, String ch) {
+		return liste[numLigne].contient(ch);
+	}
+
+	public boolean neContientPasElement(int numLigne, String ch) {
+		if(this.contientElement(numLigne, ch)==false){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

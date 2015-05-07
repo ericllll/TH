@@ -39,4 +39,22 @@ public class Liste {
 		sb.append("]");
 		return sb.toString();
 	}
+	
+	public boolean estVide(){
+		if (this.tete==null){
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean contient(String ch){
+		boolean ret = false;
+		Cellule cell = tete;
+		while(cell != null && !ret){
+			ret = cell.equals(ch);
+			cell = cell.suivante;
+		}
+		return ret;
+	}
 }

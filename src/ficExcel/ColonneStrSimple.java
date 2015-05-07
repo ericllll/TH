@@ -4,8 +4,8 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class ColonneStrSimple extends Colonne {
-	String [] cellule = new String[nbLignes];
+public class ColonneStrSimple extends ColonneStr {
+	private String [] cellule = new String[nbLignes];
 	public ColonneStrSimple(HSSFWorkbook wb, String NomCol){
 		
 		HSSFSheet sheet = wb.getSheet("Shunting");
@@ -21,5 +21,25 @@ public class ColonneStrSimple extends Colonne {
 			System.out.println(cellule[i]);
 		}
 	}
-		
+	
+	@Override
+	public boolean cellEstVide(int numLigne) {
+		boolean ret = false;
+		if(cellule[numLigne].length()==0){
+			ret = true;
+		}
+		return ret;
+	}
+	
+	public boolean cellContient(int numLigne, String ch){
+		return cellule[numLigne].equals(ch);
+	}
+	
+	public String getElement(int numLigne){
+		if (cellule[numLigne].length()==0){
+			;// retour erreur Demande de retourner le contenu d'une cellule vide
+		}
+		return cellule[numLigne];
+	}
+
 }
