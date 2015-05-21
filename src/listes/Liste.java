@@ -9,13 +9,20 @@ public class Liste {
 	private Cellule tete;
 	
 	/**.
+	 * Nombre d'éléments dans la liste
+	 */
+	private int nbElements;
+	
+	/**.
 	 * Constructeur
 	 */
 	public Liste(){
 		tete = null;
+		nbElements = 0;
 	}
 	
 	public Liste ajouteTete(String val){
+		nbElements++;
 		tete = new Cellule(val, tete);
 		return this;
 	}
@@ -56,5 +63,17 @@ public class Liste {
 			cell = cell.suivante;
 		}
 		return ret;
+	}
+	
+	public boolean neContientQue(String ch){
+		boolean ret = false;
+		if(this.nbElements==1 && this.contient(ch)){
+			ret = true;
+		}
+		return ret;
+	}
+	
+	public int getNbElements(){
+		return nbElements;
 	}
 }

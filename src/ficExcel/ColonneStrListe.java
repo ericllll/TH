@@ -16,7 +16,7 @@ public class ColonneStrListe extends ColonneStr {
 		
 		for(int i=0; i<nbLignes; i++){
 				row = sheet.getRow(i+1);
-				chaine = row.getCell(2).toString();
+				chaine = row.getCell(20).toString();
 				liste[i] = creerListe(chaine, i);
 			}
 		}
@@ -58,22 +58,18 @@ public class ColonneStrListe extends ColonneStr {
 		return l;
 	}
 	
-	
 	public void afficheListe(){
 		for(Liste l : liste) {
 			System.out.println(l.toString());
 		}
 	}
 
-	@Override
 	public boolean cellEstVide(int numLigne) {
 		return liste[numLigne].estVide();
 	}
 	
 	public boolean neContientQueElement(int numLigne, String element){
-		boolean ret = false;
-		
-		return ret;
+		return liste[numLigne].neContientQue(element);
 	}
 
 	public boolean contientElement(int numLigne, String ch) {
