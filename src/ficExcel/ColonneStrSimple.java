@@ -2,19 +2,21 @@ package ficExcel;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
-public class ColonneStrSimple extends ColonneStr {
-	private String[] cellule = new String[nbLignes];
-
-	public ColonneStrSimple(HSSFWorkbook wb, String NomCol) {
-
-		HSSFSheet sheet = wb.getSheet("Shunting");
+public class ColonneStrSimple extends Colonne {
+	private String[] cellule;
+	
+	ColonneStrSimple(String nom, int numCol, HSSFSheet sheet, int nbLignes){
+		super(nom, numCol, sheet, nbLignes);
+	}
+	
+	protected void creerColonne(HSSFSheet sheet, int nbLignes, int numCol) {
+		cellule = new String[nbLignes];
 		HSSFRow row;
 
 		for (int i = 0; i < cellule.length; i++) {
 			row = sheet.getRow(i + 1);
-			cellule[i] = row.getCell(14).toString();
+			cellule[i] = row.getCell(numCol).toString();
 		}
 	}
 

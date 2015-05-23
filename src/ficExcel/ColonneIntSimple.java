@@ -2,13 +2,16 @@ package ficExcel;
 
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
 public class ColonneIntSimple extends Colonne {
-	int [] cellule = new int[nbLignes];
-	public ColonneIntSimple(HSSFWorkbook wb, String NomCol){
-		
-		HSSFSheet sheet = wb.getSheet("Shunting");
+	private int [] cellule;
+	
+	ColonneIntSimple(String nom, int numCol, HSSFSheet sheet, int nbLignes){
+		super(nom, numCol, sheet, nbLignes);
+	}
+	
+	protected void creerColonne(HSSFSheet sheet, int nbLignes, int numCol) {
+		cellule = new int[nbLignes];
 		HSSFRow row ;
 		
 		for(int i=0; i<cellule.length; i++){

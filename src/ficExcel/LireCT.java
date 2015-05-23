@@ -15,8 +15,18 @@ import org.apache.poi.poifs.filesystem.POIFSFileSystem;
  */
 public class LireCT {
 	HSSFWorkbook wb;
+	
+	// pour test :
+	String [] Sheets = {"Shunting", "Signal"};
+	
+	// fin pour test
 
-	LireCT(String nomFichier) {
+	LireCT(String nomFichier, String onglet, String colonne, TypeDonnee type) {
+		ouvertureFichier(nomFichier);
+		
+	}
+	
+	private void ouvertureFichier(String nomFichier){
 		try {
 			POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(
 					nomFichier));
@@ -28,20 +38,5 @@ public class LireCT {
 		}
 	}
 	
-	private int nbLignesSheet(String nomSheet){
-		HSSFSheet sheet = wb.getSheet(nomSheet);
-		HSSFRow row ;
-		int i = 1;
-		int nb = 0;
-		String ch;
-		do{
-			row = sheet.getRow(i);
-			ch = row.getCell(0).toString();
-			if(!ch.isEmpty()){
-				nb++;
-			}
-			i++;
-		} while(!ch.isEmpty());
-		return nb;
-	}
+	
 }
