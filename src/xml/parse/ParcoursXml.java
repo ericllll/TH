@@ -51,12 +51,14 @@ public class ParcoursXml {
 	 * @return
 	 */
 	public static String description(Node n, String tab) {
+
 		String str = new String();
+
 		// Nous nous assurons que le nœud passé en paramètre est une instance
 		// d'Element
 		// juste au cas où il s'agisse d'un texte ou d'un espace, etc.
 		if (n instanceof Element) {
-
+			
 			// Nous sommes donc bien sur un élément de notre document
 			// Nous castons l'objet de type Node en type Element
 			Element element = (Element) n;
@@ -75,6 +77,7 @@ public class ParcoursXml {
 				// nous parcourons tous les nœuds pour les afficher
 				for (int j = 0; j < nbAtt; j++) {
 					Node noeud = att.item(j);
+
 					// On récupère le nom de l'attribut et sa valeur grâce à ces
 					// deux méthodes
 					str += " " + noeud.getNodeName() + "=\""
@@ -90,12 +93,13 @@ public class ParcoursXml {
 			// nœuds enfants
 			// Nous récupérons le contenu texte uniquement lorsqu'il n'y a que
 			// du texte, donc un seul enfant
-			if (n.getChildNodes().getLength() == 1)
+			if (n.getChildNodes().getLength() == 1) {
 				str += n.getTextContent();
-
+			}
 			// Nous allons maintenant traiter les nœuds enfants du nœud en cours
 			// de traitement
 			int nbChild = n.getChildNodes().getLength();
+
 			// Nous récupérons la liste des nœuds enfants
 			NodeList list = n.getChildNodes();
 			String tab2 = tab + "\t";
@@ -113,12 +117,12 @@ public class ParcoursXml {
 			}
 
 			// Nous fermons maintenant la balise
-			if (n.getChildNodes().getLength() < 2)
+			if (n.getChildNodes().getLength() < 2) {
 				str += "</" + n.getNodeName() + ">";
-			else
+			} else {
 				str += "\n" + tab + "</" + n.getNodeName() + ">";
+			}
 		}
-
 		return str;
 	}
 }

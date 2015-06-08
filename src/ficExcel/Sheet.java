@@ -19,7 +19,7 @@ public class Sheet {
 	public String toString(){
 		return nom;
 	}
-	public int getNbLignes(){
+	public int nbLignes(){
 		return nbLignes;
 	}
 	
