@@ -19,11 +19,17 @@ public class Cellule {
 		contenu = c;
 		suivante = n;
 	}
-	
+	/**.
+	 * 
+	 */
 	public String toString() {
 		return ""+contenu;
 	}
-	
+	/**.
+	 * 
+	 * @param ch
+	 * @return
+	 */
 	public boolean equals(String ch){
 		return contenu.equals(ch);
 	}

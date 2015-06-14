@@ -20,7 +20,11 @@ public class Liste {
 		tete = null;
 		nbElements = 0;
 	}
-	
+	/**.
+	 * 
+	 * @param val
+	 * @return
+	 */
 	public Liste ajouteTete(String val){
 		nbElements++;
 		tete = new Cellule(val, tete);
@@ -34,7 +38,9 @@ public class Liste {
 		tete = tete.suivante;
 		return this;
 	}*/
-	
+	/**.
+	 * 
+	 */
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
@@ -46,7 +52,10 @@ public class Liste {
 		sb.append("]");
 		return sb.toString();
 	}
-	
+	/**.
+	 * 
+	 * @return
+	 */
 	public boolean estVide(){
 		if (this.tete==null){
 			return true;
@@ -54,7 +63,11 @@ public class Liste {
 			return false;
 		}
 	}
-	
+	/**.
+	 * 
+	 * @param ch
+	 * @return
+	 */
 	public boolean contient(String ch){
 		boolean ret = false;
 		Cellule cell = tete;
@@ -64,7 +77,11 @@ public class Liste {
 		}
 		return ret;
 	}
-	
+	/**.
+	 * 
+	 * @param ch
+	 * @return
+	 */
 	public boolean neContientQue(String ch){
 		boolean ret = false;
 		if(this.nbElements==1 && this.contient(ch)){
@@ -72,7 +89,10 @@ public class Liste {
 		}
 		return ret;
 	}
-	
+	/**.
+	 * 
+	 * @return
+	 */
 	public int getNbElements(){
 		return nbElements;
 	}
