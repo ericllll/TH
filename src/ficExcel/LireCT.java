@@ -4,8 +4,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.POIFSFileSystem;
 /**.
@@ -17,14 +15,19 @@ public class LireCT {
 	HSSFWorkbook wb;
 	
 	// pour test :
-	String [] Sheets = {"Shunting", "Signal"};
+	String [] sheets = {"Shunting", "Signal"};
 	
 	// fin pour test
 
-	LireCT(String nomFichier, String onglet, String colonne, TypeDonnee type) {
+	public LireCT(String nomFichier) {
+		DefCol[] listeColonnes = new DefCol[1];
+		listeColonnes[0] = new DefCol("ESP", Types.CHAINE);
 		ouvertureFichier(nomFichier);
+
+		Sheet Onglet = new Sheet(wb, sheets[0], listeColonnes);
 		
 	}
+
 	
 	private void ouvertureFichier(String nomFichier){
 		try {
