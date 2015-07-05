@@ -1,0 +1,229 @@
+/*
+Commenté par: Christopher Lopes
+Nom du fichier: ycalc.cup
+Pour l'utiliser: java java_cup.Main > ycalc.cup
+*/
+
+/* ----------------------Section des déclarations préliminaires--------------*/
+
+/* Import de la classe java_cup.runtime.* */
+import java_cup.runtime.*;
+
+/* Code pour le parseur afin qu'il puisse s'interfacer avec le scanneur créé
+avec JFlex. On change également la manière de rapporter les erreurs en
+incluant la ligne et la colonne de l'erreur. */
+parser code {:
+ Lexer lexer;
+
+ public parser(Lexer lexer) {
+ this.lexer = lexer;
+ }
+
+ /* Change la méthode report_error de manière à ce qu'elle affiche la ligne et
+ la colonne auxquelles est apparue l'erreur. La cause de l'erreur est également
+ affichée: elle est passée à la méthode par le biais de la String
+ "message" */
+ public void report_error(String message, Object info) {
+
+ /* Crée un StringBuffer appelé 'm' qui contient la chaîne de caractères
+ 'Error'. */
+ StringBuffer m = new StringBuffer("Error");
+
+ /* Vérifie si l'information passée à la méthode est du même type que le type
+ java_cup.runtime.Symbol. */
+ if (info instanceof java_cup.runtime.Symbol) {
+
+ /* Déclare un objet java_cup.runtime.Symbol 's' qui transtype les informations
+ de l'objet en un objet du type java_cup.runtime.Symbol. */
+ java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+
+ /* Vérifie si le numéro de ligne de l'entrée est positif ou nul. */
+ if (s.left >= 0) {
+
+ /* Ajoute le numéro de ligne de l'erreur à la fin du message d'erreur contenu
+ dans le StringBuffer. */
+ m.append(" in line "+(s.left+1));
+
+ /* Vérifie si le numéro de colonne de l'entrée est positif ou nul. */
+ if (s.right >= 0)
+
+ /* Ajoute le numéro de colonne de l'erreur à la fin du message d'erreur
+ contenu dans le StringBuffer. */
+ m.append(", column "+(s.right+1));
+ }
+ }
+
+ /* Ajoute le message qui a été passé à la méthode à la fin du message
+ d'erreur. */
+ m.append(" : "+message);
+
+ /* Affiche le contenu du StringBuffer 'm' qui contient un message
+ d'erreur sur une ligne. */
+ System.err.println(m);
+ }
+
+ /* Modifie la méthode report_fatal_error de manière à ce qu'elle affiche le
+ numéro de ligne et le numéro de colonne à laquelle l'erreur fatale est
+ survenue. La cause de l'erreur fatale, passée à la méthode dans l'objet
+ 'message' est également affichée.*/
+ public void report_fatal_error(String message, Object info) {
+ report_error(message, info);
+ System.exit(1);
+ }
+:};
+
+/* Utiliser le scanneur créé avec JFlex */
+scan with {: return lexer.yylex(); :};
+
+/* ------------Section de Déclaration des Terminaux et non Terminaux---------*/
+
+/* Terminaux (jetons retournés par le scanneur).
+
+Les terminaux qui ne possèdent pas de valeur sont déclarés en premier, suivis
+des terminaux qui ont une valeur, dans notre cas une valeur entière.
+*/
+terminal SEMI, PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN;
+terminal Integer NUMBER, ID;
+
+/* Non Terminaux utilisés dans la section grammaire.
+
+Les non-terminaux qui ont une valeur objet sont déclarés en premier, suivis des
+non-terminaux qui ont une valeur entière. Une valeur objet signifie qu'elle
+peut être de n'importe quel type, qu'aucun type spécifique n'est imposé. Cela
+pourrait par exemple être un entier ou une String...
+*/
+non terminal Object expr_list, expr_part;
+non terminal Integer expr, factor, term;
+
+/* -------------Section de Priorité et Associativité des Terminaux----------*/
+
+/* La priorité des non-terminaux peut être définie ici. Si vous définissez les
+règles de priorité ici, vous n'avez plus à vous en soucier dans la section
+Grammaire. TIMES devrait par exemple avoir une priorité plus haute que PLUS.
+
+Les règles de priorité définies ici devraient ressembler à ce qui suit avec la
+convention que la priorité augmente avec les numéros de ligne dans le fichier.
+
+precedence left PLUS, MINUS;
+precedence left TIMES, DIVIDE;
+*/
+
+/* ----------------------------Section Grammaire-----------------------------*/
+
+/* La grammaire de notre parseur. */
+
+expr_list ::= expr_list expr_part
+              | expr_part
+
+expr_part ::= expr SEMI
+
+expr ::= factor PLUS expr
+         | factor MINUS expr
+         | factor
+
+factor ::= factor TIMES term
+           | factor DIVIDE term
+           | term
+
+primary ::= LPAREN expr RPAREN
+            | NUMBER
+            | ID
+
+/* 'expr_list' est le point de départ de notre grammaire. Il peut produire un
+autre 'expr_list' suivi d'un 'expr_part' ou il peut produire seulement un
+'expr_part'. Le membre de gauche des non-terminaux 'expr_list' et 'expr_part'
+qui apparaissent dans le membre de droite de la règle de production doivent
+être présents. Les membres de droite de ces non-terminaux doivent alors être
+traités de la même manière, à savoir que s'il se trouve un non-terminal dans le
+membre de droite de ces productions, les productions de ces non-terminaux
+doivent être trouvées et ces membres de droite traités. Ce processus suit son
+cours jusqu'à ce que seuls des terminaux apparaissent dans le membre de droite
+de la règle de production. Nous pouvons alors aller consulter la grammaire pour
+en ramener les valeurs assignées à un terminal. */
+
+expr_list ::= expr_list expr_part
+              | expr_part;
+
+/* 'expr_part' est une 'expr' suivi du terminal 'SEMI'. Le ':e' après le non
+terminal 'expr' est une étiquette qui est utilisée pour accéder à la valeur de
+'expr' qui se trouve être un entier. L'action associée à cette règle de
+production se trouve entre {: et :}. Cette action va afficher la ligne " = + e"
+où e est la valeur de 'expr'. Avant l'exécution de l'action, il nous faut
+descendre dans la grammaire compte tenu du fait que 'expr' est un non-terminal.
+Toutes les fois que l'on rencontre un non-terminal dans le membre de droite
+d'une règle de production, il nous faut trouver le membre de droite de
+ce non-terminal jusqu'à ce qu'il n'y ait plus de non-terminaux dans le
+membre de droite. Ainsi, quand nous avons fini de parcourir la
+grammaire et que nous ne rencontrons plus de non-terminaux dans les
+productions du membre de droite, nous revenons à 'expr': celui-ci
+contient alors une valeur entière. */ 
+
+expr_part ::= expr:e
+{: System.out.println(" = " + e); :}
+SEMI
+;
+
+/* 'expr' peut conduire à 'factor PLUS expr', 'factor MINUS expr' ou à
+'factor'. Les productions 'TIMES' et 'DIVIDE' n'apparaissent pas à ce
+niveau. Elles se trouvent plus bas dans la grammaire ce qui leur donne une
+priorité plus grande. Les actions du membre de droite du non-terminal 'expr'
+renvoient une valeur à 'expr'. La valeur créée est un entier et se trouve
+stocké dans 'RESULT'. RESULT est l'étiquette assignée automatiquement au
+membre de gauche, dans ce cas 'expr'. Si le membre de droite ne comporte que
+'factor', 'f' se réfère au non-terminal 'factor'. La valeur de 'f' se récupère
+via la méthode 'intValue()' et se trouvera stockée dans 'RESULT'. Dans les deux
+autres cas, 'f' et 'e' se réfèrent aux non-terminaux 'factor' et 'expr'
+respectivement avec un non-terminal entre les deux, soit 'PLUS', soit
+'MINUS'. La valeur de chacun d'entre eux se récupère avec la même méthode
+'intValue'. Les valeurs seront soit ajoutées soit soustraites, l'entier
+résultant étant stocké dans 'RESULT'.*/
+
+expr ::= factor:f PLUS expr:e
+            {: RESULT = new Integer(f.intValue() + e.intValue()); :}
+         |
+         factor:f MINUS expr:e
+            {: RESULT = new Integer(f.intValue() - e.intValue()); :}
+         |
+         factor:f
+            {: RESULT = new Integer(f.intValue()); :}
+;
+
+
+/* 'factor' peut donner 'factor TIMES term', 'factor DIVIDE term' ou
+'term'. Compte tenu du fait que les règles de production de TIMES et DIVIDE se
+trouvent plus bas dans la grammaire que celles de 'PLUS' et 'MINUS', elles
+auront une priorité plus importante. Dans le membre de droite de 'factor', on
+trouve le même genre d'actions que dans celui de 'expr'. La seule différence
+tient dans les opérations qui sont effectuées sur les valeurs retournées par
+'intValue()', multiplié et divisé au lieu de plus et moins.  */
+
+factor ::= factor:f TIMES term:t
+              {: RESULT = new Integer(f.intValue() * t.intValue()); :}
+           |
+           factor:f DIVIDE term:t
+              {: RESULT = new Integer(f.intValue() / t.intValue()); :}
+           |
+           term:t
+              {: RESULT = new Integer(t.intValue()); :}
+;
+
+/* 'term' peut conduire à 'LPAREN expr RPAREN', 'NUMBER' ou 'ID'. La première
+production contient le non-terminal 'expr' ce qui fait que son membre de gauche
+doit être trouvé et traité. Le membre de droite suivant n'a pas de
+non-terminaux: la grammaire s'arrête donc là et remonte. La valeur
+récupérée lors du passage sur le jeton 'NUMBER' est alors
+remontée. 'RESULT' prend alors 'n', qui se réfère à 'NUMBER', comme
+action de cette production. La même action est engagée pour 'ID' mis à
+part le fait que le 'i' se réfère à 'ID'. 'ID' est également le seul
+élément du membre droit de la production. Compte tenu du fait que 'ID'
+est un terminal, la grammaire s'arrête là et remonte l'arbre. */ 
+
+primary ::= LPAREN expr:e RPAREN
+               {: RESULT = e; :}
+            |
+            NUMBER:n
+               {: RESULT = n; :}
+            |
+            ID:i
+               {: RESULT = i; :}
+;
