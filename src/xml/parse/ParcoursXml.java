@@ -22,7 +22,7 @@ public class ParcoursXml {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
 		try {
-			factory.setValidating(true);
+			//factory.setValidating(true);
 			DocumentBuilder builder = factory.newDocumentBuilder();
 			ErrorHandler errHandler = new SimpleErrorHandler();
 			builder.setErrorHandler(errHandler);
@@ -31,7 +31,8 @@ public class ParcoursXml {
 			try {
 				xml = builder.parse(fileXML);
 				Element root = xml.getDocumentElement();
-				System.out.println(description(root, ""));
+				//System.out.println(description(root, ""));
+				pppppp(root);
 			} catch (SAXParseException e) {
 			}
 		} catch (ParserConfigurationException e) {
@@ -40,6 +41,52 @@ public class ParcoursXml {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
+		}
+	}
+	
+	public static void pppppp(Node n){
+		if(n instanceof Element) {
+			Element element = (Element) n;
+			String str = n.getNodeName();
+			System.out.println(n.getNodeName());
+			System.out.println(n.getNodeValue());
+			System.out.println(n.getChildNodes().getLength());
+			//System.out.println(n.getTextContent());
+			int nbChild = n.getChildNodes().getLength();
+			NodeList list = n.getChildNodes();
+			
+			Node n2 = list.item(1);
+			System.out.println(n2.getNodeName());
+			
+			
+			/*
+			if (n.getChildNodes().getLength() == 1) {
+				str += n.getTextContent();
+			}
+			// Nous allons maintenant traiter les nœuds enfants du nœud en cours
+			// de traitement
+			int nbChild = n.getChildNodes().getLength();
+
+			// Nous récupérons la liste des nœuds enfants
+			NodeList list = n.getChildNodes();
+			String tab2 = tab + "\t";
+
+			// nous parcourons la liste des nœuds
+			for (int i = 0; i < nbChild; i++) {
+				Node n2 = list.item(i);
+			//System.out.println(str);*/
+			
+			
+			/*
+			while((str=n.getNodeName()).equals("sheet")){
+				System.out.println(str);
+				if (n.getAttributes() !=null && n.getAttributes().getLength()==1){
+					NamedNodeMap att = n.getAttributes();
+					
+				} else {
+					; // message erreur : attribut absent OU nb d'attribut # 1
+				}
+			}*/
 		}
 	}
 

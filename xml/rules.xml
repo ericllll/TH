@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleList>
+	<rule question="ESP manage by the current MEI">
+		<identifier>611</identifier>
+		<type>BOOL</type>
+		<group>none</group>
+		<condition>none</condition>
+		<text>a completer</text>
+		<expression>#ESP(STATION_NAME(ESP_DEVICE(ESP))==MEI)</expression></rule>
+	<rule></rule></ruleList>

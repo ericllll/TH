@@ -5,16 +5,27 @@ import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 
+/**.
+ * 
+ * @author Eric
+ *
+ */
 public class Sheet {
-	private String nom;
-	private int nbLignes;
+	private String nom; // nom de l'ongle
+	private int nbLignes; // nombre de lignes dans l'onglet
 	Colonne [] col;
 	HSSFSheet sheet;
 	
+	/**.
+	 * 
+	 * @param wb : fichier excel
+	 * @param nomOnglet : nom de l'ongle
+	 * @param listeColonnes : liste des colonnes à lire
+	 */
 	Sheet(HSSFWorkbook wb, String nomOnglet, DefCol [] listeColonnes){
 		col = new Colonne[listeColonnes.length];
 		sheet = wb.getSheet(nomOnglet);
-		nbLignes = nbLignesSheet(sheet);
+		nbLignes = nbLignesSheet();
 		this.nom = nomOnglet;
 		for(int i=0; i<listeColonnes.length; i++){
 			switch (listeColonnes[i].type){
@@ -35,13 +46,28 @@ public class Sheet {
 			}
 		}
 	}
+	
+	/**.
+	 * Retourne le nom de la colonne
+	 */
 	public String toString(){
 		return nom;
 	}
+	
+	/**.
+	 * Retourne le nombre de lignes contenues dans l'onglet
+	 * @return
+	 */
 	public int nbLignes(){
 		return nbLignes;
 	}
 	
+	/**.
+	 * Retourne le numéro de la colonne qui porte le nom "name" (à partir de 0)
+	 * 
+	 * @param name
+	 * @return
+	 */
 	private int numeroColonne(String name){
 		if (name.isEmpty()){
 			; // code erreur : pas de nom de chaine à rechercher
@@ -68,12 +94,14 @@ public class Sheet {
 		}
 		return ret;
 	}
-	/**. Compte le nombre de lignes dans l'onglet
+	
+	/**.
+	 *  Compte le nombre de lignes dans l'onglet
+	 * Reste a faire : retourner un code d'erreur
 	 * 
-	 * @param sheet
 	 * @return
 	 */
-	private int nbLignesSheet(HSSFSheet sheet){
+	private int nbLignesSheet(){
 		HSSFRow row ;
 		HSSFCell cell;
 		int i = 1;
