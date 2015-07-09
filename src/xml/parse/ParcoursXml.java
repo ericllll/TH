@@ -45,49 +45,74 @@ public class ParcoursXml {
 	}
 	
 	public static void pppppp(Node n){
+		String essai ; // pour debug
+		
+		// Verifie que le noeud est une instance d'Element (et pas un texte, espace...)
 		if(n instanceof Element) {
+			
+			// noeud "table" :
 			Element element = (Element) n;
-			String str = n.getNodeName();
-			System.out.println(n.getNodeName());
-			System.out.println(n.getNodeValue());
-			System.out.println(n.getChildNodes().getLength());
-			//System.out.println(n.getTextContent());
 			int nbChild = n.getChildNodes().getLength();
-			NodeList list = n.getChildNodes();
+			//System.out.println(nbChild);
+			NodeList listCol = n.getChildNodes();
 			
-			Node n2 = list.item(1);
-			System.out.println(n2.getNodeName());
-			
-			
-			/*
-			if (n.getChildNodes().getLength() == 1) {
-				str += n.getTextContent();
-			}
-			// Nous allons maintenant traiter les nœuds enfants du nœud en cours
-			// de traitement
-			int nbChild = n.getChildNodes().getLength();
-
-			// Nous récupérons la liste des nœuds enfants
-			NodeList list = n.getChildNodes();
-			String tab2 = tab + "\t";
-
-			// nous parcourons la liste des nœuds
+			// parcours des noeuds "sheet" qui suivent "table"
 			for (int i = 0; i < nbChild; i++) {
-				Node n2 = list.item(i);
-			//System.out.println(str);*/
-			
-			
-			/*
-			while((str=n.getNodeName()).equals("sheet")){
-				System.out.println(str);
-				if (n.getAttributes() !=null && n.getAttributes().getLength()==1){
-					NamedNodeMap att = n.getAttributes();
+				Node n2 = listCol.item(i);
+				if (n2 instanceof Element){
+					essai = n2.getNodeName();
+					System.out.println(essai); // ***************************AFFICHE SHEET
+					// récupération de l'attribut de "sheet"
+					if (n2.getAttributes() != null && n2.getAttributes().getLength() == 1) {
+						//System.out.println("présence attribut");
+						NamedNodeMap att = n2.getAttributes();
+						String nomAtt = att.item(0).getNodeValue();
+						System.out.println("\t Attribut : " + nomAtt);
+					} else {
+						; // message erreur de lecture du fichier xml (autre chose qu'1 et 1 seul attribut
+					}
 					
-				} else {
-					; // message erreur : attribut absent OU nb d'attribut # 1
+					// recuperation des enfants de "sheet" :
+					NodeList listCol2 = n2.getChildNodes();
+					int nbChild2 = n2.getChildNodes().getLength();
+					//System.out.println(nbChild2);
+					
+					// recherche des noeuds "column"
+					for (int j=0; j<nbChild2; j++){
+						Node n3 = listCol2.item(j);
+						// si on se trouve sur un noeud "column"
+						if((n3 instanceof Element) && n3.getNodeName().equals("column")){
+							NodeList listColDef = n3.getChildNodes();
+							int nbChild3 = n3.getChildNodes().getLength();
+							int k=0;
+							while(k<nbChild3 && !((listColDef.item(k) instanceof Element) && listColDef.item(k).getNodeName().equals("name"))) {
+								//System.out.println("-" + listColDef.item(k).getNodeName() + "-");
+								k++;
+							}
+							System.out.println(k + "  " + nbChild2);
+							Node n4 = listColDef.item(k);
+							if(n4.getNodeName().equals("name")) {
+								System.out.println("name !!!");
+							} else {
+								; // erreur de lecture du fichier xml
+							}
+							while(k<nbChild3 && !((listColDef.item(k) instanceof Element) && listColDef.item(k).getNodeName().equals("type"))) {
+								k++;
+							}
+							//n4 = listColDef.item(k);
+							if(listColDef.item(k).getNodeName().equals("type")) {
+								System.out.println("type !!!");
+							} else {
+								; // erreur de lecture du fichier xml
+							}
+						}
+					}
 				}
-			}*/
-		}
+			}
+
+			
+		} else
+			; // message erreur de lecture du fichier xml
 	}
 
 	/**
@@ -101,13 +126,8 @@ public class ParcoursXml {
 
 		String str = new String();
 
-		// Nous nous assurons que le nœud passé en paramètre est une instance
-		// d'Element
-		// juste au cas où il s'agisse d'un texte ou d'un espace, etc.
+		// Verifie que le noeud est une instance d'Element (et pas un texte, espace...)
 		if (n instanceof Element) {
-			
-			// Nous sommes donc bien sur un élément de notre document
-			// Nous castons l'objet de type Node en type Element
 			Element element = (Element) n;
 
 			// Nous pouvons récupérer le nom du nœud actuellement parcouru

@@ -1,5 +1,7 @@
 package ficExcel;
 
+import java.util.ArrayList;
+
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
@@ -11,10 +13,9 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  *
  */
 public class Sheet {
-	private String nom; // nom de l'ongle
+	private String nom; // nom de l'onglet
 	private int nbLignes; // nombre de lignes dans l'onglet
-	Colonne [] col;
-	HSSFSheet sheet;
+	Colonne [] col; // colonnes
 	
 	/**.
 	 * 
@@ -22,23 +23,27 @@ public class Sheet {
 	 * @param nomOnglet : nom de l'ongle
 	 * @param listeColonnes : liste des colonnes à lire
 	 */
-	Sheet(HSSFWorkbook wb, String nomOnglet, DefCol [] listeColonnes){
-		col = new Colonne[listeColonnes.length];
+	Sheet(HSSFWorkbook wb, String nomOnglet, ArrayList<DefCol> listeColonnes){
+		// test
+		System.out.println(nomOnglet);
+		// fin test
+		HSSFSheet sheet;
+		col = new Colonne[listeColonnes.size()];
 		sheet = wb.getSheet(nomOnglet);
-		nbLignes = nbLignesSheet();
+		nbLignes = nbLignesSheet(sheet);
 		this.nom = nomOnglet;
-		for(int i=0; i<listeColonnes.length; i++){
-			switch (listeColonnes[i].type){
+		for(int i=0; i<listeColonnes.size(); i++){
+			switch (listeColonnes.get(i).type){
 			case ENTIER:
-				col[i] = new ColonneIntSimple(nomOnglet, numeroColonne(listeColonnes[i].name), sheet, nbLignes);
+				col[i] = new ColonneIntSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			case CHAINE:
-				col[i] = new ColonneStrSimple(nomOnglet, numeroColonne(listeColonnes[i].name), sheet, nbLignes);
+				col[i] = new ColonneStrSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			case LISTE_CHAINES:
-				col[i] = new ColonneStrListe(nomOnglet, numeroColonne(listeColonnes[i].name), sheet, nbLignes);
+				col[i] = new ColonneStrListe(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			default:
@@ -68,7 +73,7 @@ public class Sheet {
 	 * @param name
 	 * @return
 	 */
-	private int numeroColonne(String name){
+	private int numeroColonne(String name, HSSFSheet sheet){
 		if (name.isEmpty()){
 			; // code erreur : pas de nom de chaine à rechercher
 			return -1;
@@ -101,7 +106,7 @@ public class Sheet {
 	 * 
 	 * @return
 	 */
-	private int nbLignesSheet(){
+	private int nbLignesSheet(HSSFSheet sheet){
 		HSSFRow row ;
 		HSSFCell cell;
 		int i = 1;

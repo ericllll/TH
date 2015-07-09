@@ -8,7 +8,7 @@ public class TestXml {
 		//ParseurVerifXsd p = new ParseurVerifXsd("xml/test03.xml", "xml/test03shema.xsd");
 		//ParcoursXml p = new ParcoursXml("xml/test02.xml");
 		ParcoursXml p = new ParcoursXml("xml/CT.xml");
-		//ParcoursXmlBasic p = new ParcoursXmlBasic("xml/test02.xml");
+		//ParcoursXmlBasic p = new ParcoursXmlBasic("xml/CT.xml");
 	}
 
 }

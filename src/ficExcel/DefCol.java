@@ -14,5 +14,9 @@ public class DefCol {
 		this.name=name;
 		this.type=type;
 	}
+	
+	public String toString(){
+		return name;
+	}
 
 }

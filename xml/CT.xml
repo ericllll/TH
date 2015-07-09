@@ -22,8 +22,7 @@
 	<sheet name="Shunting">
 		<column>
 			<name>STATION_NAME</name>
-			<type>STR</type>
-			</column>
+			<type>STR</type></column>
 		<column>
 			<name>ROUTE_NAME</name>
 			<type>STR</type></column>
@@ -56,10 +55,10 @@
 			<type>STRLISTE</type></column>
 		<column>
 			<name>ROUTE_FLANK_SWITCHES_L_TRANSIT_LOCK</name>
-			<type>STRLISTE</type></column><column>
-	<name>ROUTE_FLANK_SWITCH_L_OVERRIDE</name>
-	<type>STR</type></column>
-		
+			<type>STRLISTE</type></column>
+		<column>
+			<name>ROUTE_FLANK_SWITCH_L_OVERRIDE</name>
+			<type>STR</type></column>
 		<column>
 			<name>ROUTE_FLANK_SWITCHES_L_TC_VACANT</name>
 			<type>STR</type></column>
@@ -158,8 +157,7 @@
 			<type>STR</type></column>
 		<column>
 			<name>COMMENTS</name>
-			<type>STR</type></column>
-	</sheet>
+			<type>STR</type></column></sheet>
 	<sheet name="CutOver">
 		<column>
 			<name>STATION_NAME</name>
