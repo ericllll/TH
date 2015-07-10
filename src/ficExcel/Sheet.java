@@ -26,6 +26,10 @@ public class Sheet {
 	Sheet(HSSFWorkbook wb, String nomOnglet, ArrayList<DefCol> listeColonnes){
 		// test
 		System.out.println(nomOnglet);
+		System.out.println(listeColonnes.size());
+		for(int i=0; i<listeColonnes.size(); i++){
+			;
+		}
 		// fin test
 		HSSFSheet sheet;
 		col = new Colonne[listeColonnes.size()];
@@ -81,7 +85,7 @@ public class Sheet {
 		HSSFRow row = sheet.getRow(0);
 		int i=0;
 		int ret = -1;
-		String ch;
+		String ch = " ";
 		while(!(ch=row.getCell(i).toString()).isEmpty()&& ret<0){
 			if (ch.equals(name)){
 				ret=i;
