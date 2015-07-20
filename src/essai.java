@@ -1,4 +1,4 @@
-import ficExcel.LireCT;
+import ficExcel.CT;
 
 
 public class essai {
@@ -6,7 +6,8 @@ public class essai {
 //Database base;
 	public static void main(String[] args) {
 		System.out.println("Début");
-		LireCT t = new LireCT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+		CT t = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+		System.out.println(t.chercherOnglet("Shunting"));
 	}
 
 }

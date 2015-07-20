@@ -79,7 +79,7 @@ public class LireCT {
 		// variable qui vont contenir les paramètres servant à créer les objets
 		// Sheet
 		String nameSheet; // nom de l'onglet
-		ArrayList<DefCol> listColumn = new ArrayList<DefCol>(); // liste du nom des colonnes à lire dans
+		//ArrayList<DefCol> listColumn = new ArrayList<DefCol>(); // liste du nom des colonnes à lire dans
 										// l'onglet
 		String nameColumn;
 		Types type;
@@ -116,6 +116,8 @@ public class LireCT {
 					NodeList listCol2 = n2.getChildNodes();
 					int nbChild2 = n2.getChildNodes().getLength();
 					// System.out.println(nbChild2);
+					
+					ArrayList<DefCol> listColumn = new ArrayList<DefCol>();
 
 					// recherche des noeuds "column"
 					for (int j = 0; j < nbChild2; j++) {

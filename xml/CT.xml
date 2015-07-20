@@ -145,10 +145,10 @@
 			<type>STR</type></column>
 		<column>
 			<name>TURNAROUND_STOP_TIME</name>
-			<type>ENTIER</type></column>
+			<type>STR</type></column>
 		<column>
 			<name>ROUTE_CANCELLATION_TIME_DELAY</name>
-			<type>ENTIER</type></column>
+			<type>STR</type></column>
 		<column>
 			<name>DESTINATION_RELEASE_TIME</name>
 			<type>STR</type></column>

@@ -3,6 +3,12 @@ package ficExcel;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 
+/**.
+ * 
+ * @author Eric
+ *
+ * Reste à corriger car ne lit pas correctement certaines colonnes
+ */
 public class ColonneStrSimple extends Colonne {
 	private String[] cellule;
 	

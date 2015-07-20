@@ -1,0 +1,2 @@
+NOM_COLONNE(ELEMENT) = numéro de la ligne contenant l'élément dans cette colonne
+NOM_COLONNE(numéro de ligne) = ELEMENT

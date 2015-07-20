@@ -1,0 +1,102 @@
+package rules;
+
+import java_cup.runtime.*;
+   
+parser code {:
+    
+    public void report_error(String message, Object info) {
+   
+        StringBuilder m = new StringBuilder("Error");
+   
+        if (info instanceof java_cup.runtime.Symbol) {
+            java_cup.runtime.Symbol s = ((java_cup.runtime.Symbol) info);
+   
+            if (s.left >= 0) {                
+                m.append(" in line "+(s.left+1));   
+                if (s.right >= 0)                    
+                    m.append(", column "+(s.right+1));
+            }
+        }
+   
+        m.append(" : "+message);
+   
+        System.err.println(m);
+    }
+   
+    public void report_fatal_error(String message, Object info) {
+        report_error(message, info);
+        System.exit(1);
+    }
+:};
+
+/* terminal           SEMI, PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN; */
+/* terminal Integer   NUMBER, ID; */
+   
+/*   terminal			LPAREN, RPAREN, SEMI, EQUALS;*/
+   terminal			NAME, SHEET, SEMI;
+   non terminal expr, expr_list;
+   
+/*non terminal Object     expr_list, expr_part;
+non terminal Integer    expr, factor, term;*/
+
+expr_list ::= expr_list expr
+				|
+				expr
+				;
+
+expr ::= SHEET SEMI {: System.out.println("onglet trouvé"); :}
+		|
+		NAME SEMI {: System.out.println("non trouvé"); :}
+		;
+
+comparaison ::= 	element EQ element
+					{: System.out.println("égalité"); :}
+					|
+					element DIF element
+					{: System.out.println("non égalité"); :}
+					;
+
+/*num_ligne ::= */
+
+
+/*
+
+   expr_list ::= expr_list expr_part
+                 |
+                 expr_part;
+   
+   expr_part ::= expr:e
+                 {: System.out.println(" = " + e); :}
+                 SEMI
+                 ;
+   
+   expr      ::= expr:e PLUS factor:f
+                 {: RESULT = new Integer(e.intValue() + f.intValue()); :}
+                 |
+                 expr:e MINUS factor:f
+                 {: RESULT = new Integer(e.intValue() - f.intValue()); :}
+                 |
+                 factor:f
+                 {: RESULT = new Integer(f.intValue()); :}
+                 ;
+   
+   factor    ::= factor:f TIMES term:t
+                 {: RESULT = new Integer(f.intValue() * t.intValue()); :}
+                 |
+                 factor:f DIVIDE term:t
+                 {: RESULT = new Integer(f.intValue() / t.intValue()); :}
+                 |
+                 term:t
+                 {: RESULT = new Integer(t.intValue()); :}
+                 ;
+   
+   term      ::= LPAREN expr:e RPAREN
+                 {: RESULT = e; :}
+                 |
+                 NUMBER:n
+                 {: RESULT = n; :}
+                 |
+                 ID:i
+                 {: RESULT = i; :}
+                 ;
+*/

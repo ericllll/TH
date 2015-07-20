@@ -13,9 +13,12 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  *
  */
 public class Sheet {
+	/**.
+	 * Attributs de la classe
+	 */
 	private String nom; // nom de l'onglet
 	private int nbLignes; // nombre de lignes dans l'onglet
-	Colonne [] col; // colonnes
+	Colonne [] col; // colonnes (nom, numero)
 	
 	/**.
 	 * 
@@ -28,13 +31,16 @@ public class Sheet {
 		System.out.println(nomOnglet);
 		System.out.println(listeColonnes.size());
 		for(int i=0; i<listeColonnes.size(); i++){
-			;
+			System.out.println("nom : " + listeColonnes.get(i).name + " et de type : " + listeColonnes.get(i).type);
 		}
 		// fin test
 		HSSFSheet sheet;
 		col = new Colonne[listeColonnes.size()];
 		sheet = wb.getSheet(nomOnglet);
 		nbLignes = nbLignesSheet(sheet);
+		// test
+		System.out.println("nombre de lignes  : " + nbLignes);
+		// fin de test
 		this.nom = nomOnglet;
 		for(int i=0; i<listeColonnes.size(); i++){
 			switch (listeColonnes.get(i).type){
@@ -74,6 +80,8 @@ public class Sheet {
 	/**.
 	 * Retourne le numéro de la colonne qui porte le nom "name" (à partir de 0)
 	 * 
+	 * A completer pour traiter le cas d'un ouglet vide et la levée d'une exception
+	 * 
 	 * @param name
 	 * @return
 	 */
@@ -83,18 +91,28 @@ public class Sheet {
 			return -1;
 		}
 		HSSFRow row = sheet.getRow(0);
+		int nbCol = row.getLastCellNum();
 		int i=0;
 		int ret = -1;
 		String ch = " ";
-		while(!(ch=row.getCell(i).toString()).isEmpty()&& ret<0){
+		
+		do {
+			ch=row.getCell(i).toString();
+			if(ch.equals(name)){
+				ret = i;
+			}
+			i++;
+		} while (i<nbCol && ret==-1) ;
+		/*while(!(ch=row.getCell(i).toString()).isEmpty() && ret<0){
+			System.out.println("numero colonne : " + i);
 			if (ch.equals(name)){
 				ret=i;
 			}
 			i++;
-		}
+		}*/
 		if (ret==-1){
 			if(i==0){
-				; // code erreur : aucune colonne trouvée - onglet vide
+				; // code erreur : aucune colonne trouvée - onglet vide (normalement, exception avant)
 				ret = -2;
 			} else {
 				; // code erreur : la colonne recherchée n'existe pas
