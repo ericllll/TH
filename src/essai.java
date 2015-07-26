@@ -8,6 +8,8 @@ public class essai {
 		System.out.println("Début");
 		CT t = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
 		System.out.println(t.chercherOnglet("Shunting"));
+		
+		
 	}
 
 }

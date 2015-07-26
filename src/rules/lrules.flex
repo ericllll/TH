@@ -1,6 +1,7 @@
 package rules;
 
 import java_cup.runtime.*;
+import ficExcel.CT;
 
 %%
 
@@ -10,6 +11,9 @@ import java_cup.runtime.*;
 %cup
 
 %{
+	/* import du tableau des données dans l'analyseur */
+	CT tb = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -43,7 +47,12 @@ name = [A-Za-z][A-Za-z_]*
 /*	"=="				{ System.out.print(" == "); return symbol(sym.EQUALS); } */
 /*	{LineTerminator}	{ return symbol(sym.LL); }*/
 	
-	{name_sheet}		{ return symbol(sym.SHEET); }
+	{name_sheet}		{ 	/*if(tb.chercherOnglet(yytext())!=null){*/
+								return symbol(sym.SHEET, new String(yytext().substring(1)));
+								/*return symbol(sym.SHEET);*/
+							/*}*/
+						}
+							
 	{name}				{ return symbol(sym.NAME); }
    
 /*    {dec_int_lit}      { System.out.print(yytext());

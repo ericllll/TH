@@ -3,6 +3,7 @@
 package rules;
 
 import java_cup.runtime.*;
+import ficExcel.CT;
 
 
 /**
@@ -224,6 +225,9 @@ class Lexer implements java_cup.runtime.Scanner {
   private int zzFinalHighSurrogate = 0;
 
   /* user code: */
+	/* import du tableau des données dans l'analyseur */
+	CT tb = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+
     private Symbol symbol(int type) {
         return new Symbol(type, yyline, yycolumn);
     }
@@ -628,7 +632,10 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 7: break;
           case 4: 
-            { return symbol(sym.SHEET);
+            { /*if(tb.chercherOnglet(yytext())!=null){*/
+								return symbol(sym.SHEET, new String(yytext().substring(1)));
+								/*return symbol(sym.SHEET);*/
+							/*}*/
             }
           case 8: break;
           default:

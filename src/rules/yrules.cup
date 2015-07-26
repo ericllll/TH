@@ -44,17 +44,18 @@ expr_list ::= expr_list expr
 				expr
 				;
 
-expr ::= SHEET SEMI {: System.out.println("onglet trouvé"); :}
+expr ::= SHEET:e SEMI {: System.out.println("onglet trouvé : " + e); :}/*{: System.out.println("onglet trouvé");:}*/
 		|
 		NAME SEMI {: System.out.println("non trouvé"); :}
 		;
-
+/*
 comparaison ::= 	element EQ element
 					{: System.out.println("égalité"); :}
 					|
 					element DIF element
 					{: System.out.println("non égalité"); :}
 					;
+					*/
 
 /*num_ligne ::= */
 
