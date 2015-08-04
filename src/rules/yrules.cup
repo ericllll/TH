@@ -44,7 +44,7 @@ expr_list ::= expr_list expr
 				expr
 				;
 
-expr ::= SHEET:e SEMI {: System.out.println("onglet trouvé : " + e); :}/*{: System.out.println("onglet trouvé");:}*/
+expr ::= SHEET:e SEMI {: System.out.println("onglet trouvé : " + e); :}
 		|
 		NAME SEMI {: System.out.println("non trouvé"); :}
 		;

@@ -47,10 +47,11 @@ name = [A-Za-z][A-Za-z_]*
 /*	"=="				{ System.out.print(" == "); return symbol(sym.EQUALS); } */
 /*	{LineTerminator}	{ return symbol(sym.LL); }*/
 	
-	{name_sheet}		{ 	/*if(tb.chercherOnglet(yytext())!=null){*/
+	{name_sheet}		{ 	if(tb.chercherOnglet(yytext().substring(1))==null){
+								return symbol(sym.SHEET, "onglet inexistant");
+							} else {
 								return symbol(sym.SHEET, new String(yytext().substring(1)));
-								/*return symbol(sym.SHEET);*/
-							/*}*/
+							}
 						}
 							
 	{name}				{ return symbol(sym.NAME); }

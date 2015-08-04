@@ -53,11 +53,13 @@ public class CT {
 		int i = 0;
 		while(i<table.size()) {
 			if(table.get(i).toString().equals(name)){
+				//System.out.println("recherche fructueuse !");
 				return table.get(i);
 			}
 			i++;
 		}
 		; // message erreur : aucun onglet de ce nom n'existe
+		//System.out.println("recherche non fructueuse !");
 		return null;
 	}
 	

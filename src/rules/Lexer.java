@@ -632,10 +632,11 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 7: break;
           case 4: 
-            { /*if(tb.chercherOnglet(yytext())!=null){*/
+            { if(tb.chercherOnglet(yytext().substring(0))==null){
+								return symbol(sym.SHEET, "onglet inexistant");
+							} else {
 								return symbol(sym.SHEET, new String(yytext().substring(1)));
-								/*return symbol(sym.SHEET);*/
-							/*}*/
+							}
             }
           case 8: break;
           default:

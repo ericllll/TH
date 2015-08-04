@@ -7,8 +7,9 @@ public class essai {
 	public static void main(String[] args) {
 		System.out.println("Début");
 		CT t = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
-		System.out.println(t.chercherOnglet("Shunting"));
-		
+		System.out.println(t.chercherOnglet("ESP"));
+		if (t.chercherOnglet("ES/P")==null)
+			System.out.println("toto");
 		
 	}
 
