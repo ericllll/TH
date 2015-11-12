@@ -624,7 +624,7 @@ class Lexer implements java_cup.runtime.Scanner {
             }
           case 5: break;
           case 2: 
-            { return symbol(sym.NAME);
+            { return symbol(sym.NAME, new String(yytext()));
             }
           case 6: break;
           case 3: 
@@ -633,6 +633,7 @@ class Lexer implements java_cup.runtime.Scanner {
           case 7: break;
           case 4: 
             { if(tb.chercherOnglet(yytext().substring(1))==null){
+								System.out.println("ERREUR !!!");
 								return symbol(sym.SHEET, "onglet inexistant");
 							} else {
 								return symbol(sym.SHEET, new String(yytext().substring(1)));

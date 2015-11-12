@@ -24,7 +24,8 @@ import org.xml.sax.SAXParseException;
 import xml.parse.SimpleErrorHandler;
 
 /**
- * .
+ * . Objet CT consitué du contenu du fichier fichierCT lu conformément au
+ * fichier xml xmlDefCT
  * 
  * @author eric
  *
@@ -38,6 +39,11 @@ public class CT {
 		ParcoursXml(xmlDefCT);
 	}
 
+	/**
+	 * . Création de l'objet wb
+	 * 
+	 * @param nomFichier
+	 */
 	private void ouvertureCT(String nomFichier) {
 		try {
 			POIFSFileSystem fs = new POIFSFileSystem(new FileInputStream(nomFichier));
@@ -49,20 +55,31 @@ public class CT {
 		}
 	}
 
+	/**
+	 * . Renvoi l'objet sheet dont le nom correspond au paramètre name
+	 * 
+	 * @param name
+	 * @return
+	 */
 	public Sheet chercherOnglet(String name) {
 		int i = 0;
-		while(i<table.size()) {
-			if(table.get(i).toString().equals(name)){
-				//System.out.println("recherche fructueuse !");
+		while (i < table.size()) {
+			if (table.get(i).toString().equals(name)) {
+				// System.out.println("recherche fructueuse !");
 				return table.get(i);
 			}
 			i++;
 		}
 		; // message erreur : aucun onglet de ce nom n'existe
-		//System.out.println("recherche non fructueuse !");
+			// System.out.println("recherche non fructueuse !");
 		return null;
 	}
-	
+
+	/**
+	 * . Lance la lecture du fichier xml dans le but de remplir l'objet table
+	 * 
+	 * @param nFichier
+	 */
 	private void ParcoursXml(String nFichier) {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 
@@ -89,12 +106,18 @@ public class CT {
 		}
 	}
 
+	/**
+	 * . Remplit l'object table avec des objets sheet suivant le fichier xml
+	 * 
+	 * @param n
+	 */
 	private void lireXml(Node n) {
 		// variable qui vont contenir les paramètres servant à créer les objets
 		// Sheet
 		String nameSheet; // nom de l'onglet
-		//ArrayList<DefCol> listColumn = new ArrayList<DefCol>(); // liste du nom des colonnes à lire dans
-										// l'onglet
+		// ArrayList<DefCol> listColumn = new ArrayList<DefCol>(); // liste du
+		// nom des colonnes à lire dans
+		// l'onglet
 		String nameColumn;
 		Types type;
 
@@ -103,7 +126,7 @@ public class CT {
 		if (n instanceof Element) {
 
 			// noeud "table" :
-			//Element element = (Element) n;
+			// Element element = (Element) n;
 			int nbChild = n.getChildNodes().getLength();
 			NodeList listCol = n.getChildNodes();
 
@@ -119,7 +142,7 @@ public class CT {
 						nameSheet = att.item(0).getNodeValue();
 						// test
 						System.out.println("nameSheet : " + nameSheet);
-						//fin test
+						// fin test
 						// System.out.println("\t Attribut : " + nomAtt);
 					} else {
 						; // message erreur de lecture du fichier xml (autre
@@ -130,7 +153,7 @@ public class CT {
 					NodeList listCol2 = n2.getChildNodes();
 					int nbChild2 = n2.getChildNodes().getLength();
 					// System.out.println(nbChild2);
-					
+
 					ArrayList<DefCol> listColumn = new ArrayList<DefCol>();
 
 					// recherche des noeuds "column"

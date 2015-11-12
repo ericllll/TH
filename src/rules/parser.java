@@ -6,6 +6,7 @@
 package rules;
 
 import java_cup.runtime.*;
+import ficExcel.CT;
 import java_cup.runtime.XMLElement;
 
 /** CUP v0.11b 20150326 (SVN rev 63) generated parser.
@@ -97,6 +98,8 @@ public class parser extends java_cup.runtime.lr_parser {
 
 
     
+    CT tb = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+    
     public void report_error(String message, Object info) {
    
         StringBuilder m = new StringBuilder("Error");
@@ -185,7 +188,8 @@ class CUP$parser$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
 		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
-		 System.out.println("onglet trouvé : " + e); 
+		 ;
+							System.out.println("Résultat : " + e); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;
@@ -194,7 +198,10 @@ class CUP$parser$actions {
           case 4: // expr ::= NAME SEMI 
             {
               Object RESULT =null;
-		 System.out.println("non trouvé"); 
+		int eleft = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).left;
+		int eright = ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)).right;
+		Object e = (Object)((java_cup.runtime.Symbol) CUP$parser$stack.elementAt(CUP$parser$top-1)).value;
+		 System.out.println("Pas un onglet : " + e); 
               CUP$parser$result = parser.getSymbolFactory().newSymbol("expr",0, ((java_cup.runtime.Symbol)CUP$parser$stack.elementAt(CUP$parser$top-1)), ((java_cup.runtime.Symbol)CUP$parser$stack.peek()), RESULT);
             }
           return CUP$parser$result;

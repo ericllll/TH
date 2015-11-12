@@ -1,8 +1,11 @@
 package rules;
 
 import java_cup.runtime.*;
+import ficExcel.CT;
    
 parser code {:
+    
+    CT tb = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
     
     public void report_error(String message, Object info) {
    
@@ -44,9 +47,10 @@ expr_list ::= expr_list expr
 				expr
 				;
 
-expr ::= SHEET:e SEMI {: System.out.println("onglet trouvé : " + e); :}
+expr ::= SHEET:e SEMI {: ;
+							System.out.println("Résultat : " + e); :}
 		|
-		NAME SEMI {: System.out.println("non trouvé"); :}
+		NAME:e SEMI {: System.out.println("Pas un onglet : " + e); :}
 		;
 /*
 comparaison ::= 	element EQ element

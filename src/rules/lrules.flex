@@ -41,20 +41,29 @@ name = [A-Za-z][A-Za-z_]*
 /*     "-"                { System.out.print(" - "); return symbol(sym.MINUS); } */
 /*    "*"                { System.out.print(" * "); return symbol(sym.TIMES); } */
 /*    "/"                { System.out.print(" / "); return symbol(sym.DIVIDE); } */
-/*    "("                { System.out.print(" ( "); return symbol(sym.LPAREN); }
-    ")"                { System.out.print(" ) "); return symbol(sym.RPAREN); } */
 
-/*	"=="				{ System.out.print(" == "); return symbol(sym.EQUALS); } */
+    "("                { System.out.print(" ( "); return symbol(sym.LPAREN); }
+    ")"                { System.out.print(" ) "); return symbol(sym.RPAREN); }
+
+	"=="				{ System.out.print(" == "); return symbol(sym.EQUALS); }
 /*	{LineTerminator}	{ return symbol(sym.LL); }*/
-	
+
+	"input1"			{ System.out.print(" input1 "); return symbol(sym.INPUT1); }
+	"input2"			{ System.out.print(" input2 "); return symbol(sym.INPUT2); }
+	"input3"			{ System.out.print(" input3 "); return symbol(sym.INPUT3); }
+	"input4"			{ System.out.print(" input4 "); return symbol(sym.INPUT4); }
+	 
+	 
+	 
 	{name_sheet}		{ 	if(tb.chercherOnglet(yytext().substring(1))==null){
+								System.out.println("ERREUR !!!");
 								return symbol(sym.SHEET, "onglet inexistant");
 							} else {
 								return symbol(sym.SHEET, new String(yytext().substring(1)));
 							}
 						}
 							
-	{name}				{ return symbol(sym.NAME); }
+	{name}				{ return symbol(sym.NAME, new String(yytext())); }
    
 /*    {dec_int_lit}      { System.out.print(yytext());
                          return symbol(sym.NUMBER, new Integer(yytext())); } */
