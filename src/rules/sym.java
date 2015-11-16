@@ -8,17 +8,23 @@ package rules;
 /** CUP generated class containing symbol constants. */
 public class sym {
   /* terminals */
+  public static final int INPUT = 7;
+  public static final int RPAREN = 3;
   public static final int error = 1;
-  public static final int SHEET = 3;
-  public static final int SEMI = 4;
-  public static final int NAME = 2;
+  public static final int SHEET = 5;
+  public static final int SEMI = 6;
+  public static final int NAME = 4;
+  public static final int LPAREN = 2;
   public static final int EOF = 0;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "LPAREN",
+  "RPAREN",
   "NAME",
   "SHEET",
-  "SEMI"
+  "SEMI",
+  "INPUT"
   };
 }
 

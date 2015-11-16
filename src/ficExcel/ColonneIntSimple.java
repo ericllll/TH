@@ -34,6 +34,9 @@ public class ColonneIntSimple extends Colonne {
 	/*public boolean celluleEstVide(int numLigne){
 		
 	}*/
+	public int getLineContainsElement(String element){
+		return 0;
+	}
 	
 	public void afficheListe(){
 		for(int i=0; i<cellule.length; i++){

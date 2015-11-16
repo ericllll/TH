@@ -89,4 +89,7 @@ public class ColonneStrListe extends Colonne {
 		}
 	}
 	
+	public int getLineContainsElement(String element){
+		return 0;
+	}
 }

@@ -2,10 +2,14 @@ package rules;
 
 import java_cup.runtime.*;
 import ficExcel.CT;
+import ficExcel.Sheet;
    
 parser code {:
     
     CT tb = new CT("YIS CT Build R02D02_P.xls", "xml/CT.xml");
+    
+    String input1 = "EPYISA";
+    String input2 = "YIS";
     
     public void report_error(String message, Object info) {
    
@@ -35,9 +39,10 @@ parser code {:
 /* terminal           SEMI, PLUS, MINUS, TIMES, DIVIDE, LPAREN, RPAREN; */
 /* terminal Integer   NUMBER, ID; */
    
-/*   terminal			LPAREN, RPAREN, SEMI, EQUALS;*/
-   terminal			NAME, SHEET, SEMI;
-   non terminal expr, expr_list;
+   terminal			LPAREN, RPAREN;
+/*	terminal	EQ, DIF;*/		
+   terminal			NAME, SHEET, SEMI, INPUT;
+   non terminal expr, expr_list, num_ligne, element;
    
 /*non terminal Object     expr_list, expr_part;
 non terminal Integer    expr, factor, term;*/
@@ -47,24 +52,58 @@ expr_list ::= expr_list expr
 				expr
 				;
 
-expr ::= SHEET:e SEMI {: ;
-							System.out.println("Résultat : " + e); :}
+expr ::= SHEET:e SEMI {: System.out.println("Résultat : " + e); :}
 		|
 		NAME:e SEMI {: System.out.println("Pas un onglet : " + e); :}
+		|
+		num_ligne SEMI ;
+		
+num_ligne ::= SHEET:e NAME:f LPAREN element:g RPAREN
+					{:
+					int ligne = 0;
+					System.out.println("Trouvé : " + e.toString() + " " + f.toString());
+					Sheet sheet = tb.chercherOnglet(e.toString());
+					ligne = tb.ligneEleUniqueDansColonne(sheet, f.toString(), input1);
+					System.out.println("le numéro de ligne est : " + ligne + ".");
+					:} ;
+
+element ::= INPUT {: RESULT = new String(input1); :}
+			;		
+			
+			
+		
+/*		|
 		;
-/*
+		bool
+		;
+
+bool ::= LPAREN objet EQ objet RPAREN
+		|
+		LPAREN objet DIF objet RPAREN
+		;
+
+objet ::= colonne LPAREN num_ligne RPAREN
+		|
+		INPUT
+		;
+		
+num_ligne ::= colonne LPAREN element RPAREN	
+
+
+
+
 comparaison ::= 	element EQ element
 					{: System.out.println("égalité"); :}
 					|
 					element DIF element
 					{: System.out.println("non égalité"); :}
 					;
-					*/
+					
 
-/*num_ligne ::= */
+num_ligne ::= 
 
 
-/*
+
 
    expr_list ::= expr_list expr_part
                  |

@@ -31,12 +31,36 @@ import xml.parse.SimpleErrorHandler;
  *
  */
 public class CT {
+	/**
+	 * . Fichier excel
+	 */
 	HSSFWorkbook wb;
+
+	/**
+	 * . Table contenant tous les onglets
+	 */
 	ArrayList<Sheet> table = new ArrayList<Sheet>();
 
+	/**
+	 * . Constructeur de la classe Remplit table avec des objet de type Sheet
+	 * conformément au fichier xml
+	 * 
+	 * @param fichierCT
+	 * @param xmlDefCT
+	 */
 	public CT(String fichierCT, String xmlDefCT) {
-		ouvertureCT(fichierCT);
-		ParcoursXml(xmlDefCT);
+		//if (table == null) {
+			ouvertureCT(fichierCT);
+			ParcoursXml(xmlDefCT);
+		/*} else {
+			System.out.println("Object table déjà crée.");
+		/*/
+	}
+	
+	public int ligneEleUniqueDansColonne(Sheet sheet, String colonne, String element){
+		int ret = 0;
+		ret = sheet.ligneContenantEleDansColonne(colonne, element);
+		return ret;
 	}
 
 	/**

@@ -22,7 +22,7 @@ public class ColonneStrSimple extends Colonne {
 
 		for (int i = 0; i < cellule.length; i++) {
 			row = sheet.getRow(i + 1);
-			cellule[i] = row.getCell(numCol).toString();
+			cellule[i] = row.getCell(numCol).toString().trim();
 		}
 	}
 
@@ -58,5 +58,20 @@ public class ColonneStrSimple extends Colonne {
 		}
 		return cellule[numLigne];
 	}
-
+	/**.
+	 * Retourne le numéro de ligne de la première cellule égale à element
+	 * Retourne -1 si la chaine n'est pas trouvée
+	 * @param element
+	 * @return
+	 */
+	public int getLineContainsElement(String element){
+		int i=0;
+		for(String str : cellule){
+			if(str.equals(element)){
+				return i;
+			}
+			i++;
+		}
+		return -1; // cellule non trouvée
+	}
 }

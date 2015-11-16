@@ -19,6 +19,7 @@ public class Sheet {
 	private String nom; // nom de l'onglet
 	private int nbLignes; // nombre de lignes dans l'onglet
 	Colonne [] col; // colonnes (nom, numero)
+	HSSFSheet sheet;
 	
 	/**.
 	 * 
@@ -34,7 +35,7 @@ public class Sheet {
 			System.out.println("nom : " + listeColonnes.get(i).name + " et de type : " + listeColonnes.get(i).type);
 		}
 		// fin test
-		HSSFSheet sheet;
+		//HSSFSheet sheet; // à supprimer
 		col = new Colonne[listeColonnes.size()];
 		sheet = wb.getSheet(nomOnglet);
 		nbLignes = nbLignesSheet(sheet);
@@ -45,15 +46,15 @@ public class Sheet {
 		for(int i=0; i<listeColonnes.size(); i++){
 			switch (listeColonnes.get(i).type){
 			case ENTIER:
-				col[i] = new ColonneIntSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
+				col[i] = new ColonneIntSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			case CHAINE:
-				col[i] = new ColonneStrSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
+				col[i] = new ColonneStrSimple(nomOnglet, numeroColonne(listeColonnes.get(i).name), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			case LISTE_CHAINES:
-				col[i] = new ColonneStrListe(nomOnglet, numeroColonne(listeColonnes.get(i).name, sheet), sheet, nbLignes);
+				col[i] = new ColonneStrListe(nomOnglet, numeroColonne(listeColonnes.get(i).name), sheet, nbLignes);
 				//col[i].afficheListe();
 				break;
 			default:
@@ -62,8 +63,13 @@ public class Sheet {
 		}
 	}
 	
+	public int ligneContenantEleDansColonne(String colonne, String element){
+		int col = numeroColonne(colonne);
+		return this.col[col].getLineContainsElement(element);
+	}
+	
 	/**.
-	 * Retourne le nom de la colonne
+	 * Retourne le nom de l'onglet
 	 */
 	public String toString(){
 		return nom;
@@ -85,7 +91,7 @@ public class Sheet {
 	 * @param name
 	 * @return
 	 */
-	private int numeroColonne(String name, HSSFSheet sheet){
+	private int numeroColonne(String name){
 		if (name.isEmpty()){
 			; // code erreur : pas de nom de chaine à rechercher
 			return -1;

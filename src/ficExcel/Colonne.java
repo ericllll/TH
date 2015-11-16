@@ -18,5 +18,7 @@ public abstract class Colonne {
 	public String toString(){
 		return nom;
 	}
+	
+	public abstract int getLineContainsElement(String element);
 
 }
