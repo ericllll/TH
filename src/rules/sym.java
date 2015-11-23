@@ -13,7 +13,7 @@ public class sym {
   public static final int error = 1;
   public static final int SHEET = 5;
   public static final int SEMI = 6;
-  public static final int NAME = 4;
+  public static final int CHAINE = 4;
   public static final int LPAREN = 2;
   public static final int EOF = 0;
   public static final String[] terminalNames = new String[] {
@@ -21,7 +21,7 @@ public class sym {
   "error",
   "LPAREN",
   "RPAREN",
-  "NAME",
+  "CHAINE",
   "SHEET",
   "SEMI",
   "INPUT"

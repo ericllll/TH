@@ -41,8 +41,8 @@ parser code {:
    
    terminal			LPAREN, RPAREN;
 /*	terminal	EQ, DIF;*/		
-   terminal			NAME, SHEET, SEMI, INPUT;
-   non terminal expr, expr_list, num_ligne, element;
+   terminal			CHAINE, SHEET, SEMI, INPUT;
+   non terminal expr, expr_list, num_ligne, element, colonne;
    
 /*non terminal Object     expr_list, expr_part;
 non terminal Integer    expr, factor, term;*/
@@ -54,22 +54,30 @@ expr_list ::= expr_list expr
 
 expr ::= SHEET:e SEMI {: System.out.println("Résultat : " + e); :}
 		|
-		NAME:e SEMI {: System.out.println("Pas un onglet : " + e); :}
+		CHAINE:e SEMI {: System.out.println("Pas un onglet : " + e); :}
 		|
 		num_ligne SEMI ;
 		
-num_ligne ::= SHEET:e NAME:f LPAREN element:g RPAREN
+num_ligne ::= colonne:c LPAREN element:g RPAREN
 					{:
 					int ligne = 0;
-					System.out.println("Trouvé : " + e.toString() + " " + f.toString());
-					Sheet sheet = tb.chercherOnglet(e.toString());
-					ligne = tb.ligneEleUniqueDansColonne(sheet, f.toString(), input1);
+					Sheet sheet = tb.chercherOnglet(((ElementColonne)c).sheet);
+					ligne = tb.ligneEleUniqueDansColonne(sheet, ((ElementColonne)c).column, input1);
 					System.out.println("le numéro de ligne est : " + ligne + ".");
 					:} ;
 
 element ::= INPUT {: RESULT = new String(input1); :}
-			;		
+		|
+		colonne LPAREN num_ligne RPAREN
+					{:
+					:}
+		;		
 			
+colonne ::= SHEET:e CHAINE:f
+					{:
+					System.out.println("Trouvé : " + e.toString() + " " + f.toString());
+					RESULT = new ElementColonne(e.toString(), f.toString());
+					:} ;
 			
 		
 /*		|

@@ -47,9 +47,8 @@ name = [A-Za-z][A-Za-z_]*
 
 	"input1"			{ System.out.print(" input1 "); return symbol(sym.INPUT, new String(yytext())); }
 	"input2"			{ System.out.print(" input2 "); return symbol(sym.INPUT, new String(yytext())); }
-/*	"input3"			{ System.out.print(" input3 "); return symbol(sym.INPUT3); }
-	"input4"			{ System.out.print(" input4 "); return symbol(sym.INPUT4); }
-	 */
+	"input3"			{ System.out.print(" input3 "); return symbol(sym.INPUT, new String(yytext())); }
+	"input4"			{ System.out.print(" input4 "); return symbol(sym.INPUT, new String(yytext())); }
 	 
 	 
 	{name_sheet}		{ 	if(tb.chercherOnglet(yytext().substring(0,yytext().length()-1))==null){
@@ -60,7 +59,7 @@ name = [A-Za-z][A-Za-z_]*
 							}
 						}
 							
-	{name}				{ return symbol(sym.NAME, new String(yytext())); }
+	{name}				{ return symbol(sym.CHAINE, new String(yytext())); }
    
 /*    {dec_int_lit}      { System.out.print(yytext());
                          return symbol(sym.NUMBER, new Integer(yytext())); } */
