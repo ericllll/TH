@@ -40,9 +40,9 @@ parser code {:
 /* terminal Integer   NUMBER, ID; */
    
    terminal			LPAREN, RPAREN;
-/*	terminal	EQ, DIF;*/		
-   terminal			CHAINE, SHEET, SEMI, INPUT;
-   non terminal expr, expr_list, num_ligne, element, colonne;
+	terminal	EQ, DIF;		
+   terminal			CHAINE, SHEET, SEMI, INPUT, EL;
+   non terminal expr, expr_list, num_ligne, element, colonne, bool;
    
 /*non terminal Object     expr_list, expr_part;
 non terminal Integer    expr, factor, term;*/
@@ -52,11 +52,22 @@ expr_list ::= expr_list expr
 				expr
 				;
 
+
+
 expr ::= SHEET:e SEMI {: System.out.println("Résultat : " + e); :}
 		|
 		CHAINE:e SEMI {: System.out.println("Pas un onglet : " + e); :}
 		|
-		num_ligne SEMI ;
+		num_ligne SEMI
+		|
+		bool
+		;
+		
+bool ::= element:e1 EQ element:e2 SEMI {: :}
+		|
+		element:e1 DIF element:e2 SEMI {: :}
+		;
+		
 		
 num_ligne ::= colonne:c LPAREN element:g RPAREN
 					{:
@@ -71,6 +82,8 @@ element ::= INPUT {: RESULT = new String(input1); :}
 		colonne LPAREN num_ligne RPAREN
 					{:
 					:}
+		|
+		EL
 		;		
 			
 colonne ::= SHEET:e CHAINE:f

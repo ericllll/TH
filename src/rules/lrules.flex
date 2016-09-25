@@ -40,8 +40,8 @@ name = [A-Za-z][A-Za-z_]*
     "("                { System.out.print(" ( "); return symbol(sym.LPAREN); }
     ")"                { System.out.print(" ) "); return symbol(sym.RPAREN); }
 
-/*	"=="				{ System.out.print(" == "); return symbol(sym.EQ); }
-	"!="				{ System.out.print(" != "); return symbol(sym.DIF); }*/
+	"=="				{ System.out.print(" == "); return symbol(sym.EQ); }
+	"!="				{ System.out.print(" != "); return symbol(sym.DIF); }
 	
 /*	{LineTerminator}	{ return symbol(sym.LL); }*/
 
@@ -49,6 +49,7 @@ name = [A-Za-z][A-Za-z_]*
 	"input2"			{ System.out.print(" input2 "); return symbol(sym.INPUT, new String(yytext())); }
 	"input3"			{ System.out.print(" input3 "); return symbol(sym.INPUT, new String(yytext())); }
 	"input4"			{ System.out.print(" input4 "); return symbol(sym.INPUT, new String(yytext())); }
+	"element"			{ System.out.print(" element "); return symbol(sym.EL, new String(yytext()));}
 	 
 	 
 	{name_sheet}		{ 	if(tb.chercherOnglet(yytext().substring(0,yytext().length()-1))==null){
