@@ -14,5 +14,6 @@ public class Essai {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		System.out.println("Fin");
 	}
 }
